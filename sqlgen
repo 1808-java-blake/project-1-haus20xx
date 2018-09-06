@@ -1,0 +1,39 @@
+SET SCHEMA 'reimburse_system';
+
+CREATE TABLE ers_reimbursement_status (
+	reimb_status_id INT,
+	reimb_status VARCHAR(10)
+);
+
+CREATE TABLE ers_reimbursement_type(
+	reimb_type_id INT,
+	reimb_type VARCHAR(10)
+);
+
+CREATE TABLE ers_user_roles(
+	ers_user_role_id INT,
+	user_role VARCHAR(10)
+);
+
+CREATE TABLE ers_users(
+	ers_user_id INT,
+	ers_username VARCHAR(50),
+	ers_password VARCHAR(50),
+	user_first_name VARCHAR(100),
+	user_last_name VARCHAR(100),
+	user_email VARCHAR(150),
+	user_role_id INT
+);
+
+CREATE TABLE ers_reimbursement(
+	reimb_id INT,
+	reimb_amount INT,
+	reimb_submitted TIMESTAMP,
+	reimb_resolved TIMESTAMP,
+	reimb_description VARCHAR(250),
+	reimb_receipt JSON,
+	reimb_author INT,
+	reimb_resolver INT,
+	reimb_status_id INT,
+	reimb_type_id INT
+);
