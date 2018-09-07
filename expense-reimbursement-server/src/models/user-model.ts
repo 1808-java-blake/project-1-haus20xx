@@ -1,3 +1,5 @@
+import { hashPassword } from "../util/password-hasher";
+
 export class User {
     id = 0;
     username = '';
@@ -11,7 +13,7 @@ export class User {
         lastname?: string, email?: string, role?: string) {
       id && (this.id = id);
       username && (this.username = username);
-      password && (this.password = password);
+      password && (this.password = hashPassword(password));
       firstname && (this.firstname = firstname);
       lastname && (this.lastname = lastname);
       email && (this.email = email);

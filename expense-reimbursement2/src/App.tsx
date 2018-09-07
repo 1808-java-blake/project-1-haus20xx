@@ -1,20 +1,30 @@
 import * as React from 'react';
 import './App.css';
+import './include/bootstrap';
 
-import logo from './logo.svg';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-class App extends React.Component {
+class App extends React.Component<any,any> {
+  constructor(props:any){
+    super(props);
+    this.setState({
+
+    });
+  }
+
   public render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <BrowserRouter>
+      <div className="App row justify-content-center">
+        <Switch>
+          <Route path='/login' component={LoginComponent}/>
+          <Route path='/register' component={RegisterComponent}/>
+          <Route component={LoginComponent}/>
+        </Switch>
       </div>
+      </BrowserRouter>
     );
   }
 }
