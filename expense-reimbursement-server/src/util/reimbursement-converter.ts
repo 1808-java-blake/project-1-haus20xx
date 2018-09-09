@@ -14,9 +14,20 @@ const statusIdValues={
     3: "DENIED"
 
 }
+export const statusValueIds={
+    "PENDING": 1,
+    "APPROVED": 2,
+    "DENIED": 3
+}
 const typeIdValues={
     1:"LODGING",
     2:"TRAVEL",
     3:"FOOD",
     4:"OTHER"
+}
+export const typeValueIds={
+    "LODGING":1,
+    "TRAVEL":2,
+    "FOOD":3,
+    "OTHER":4
 }

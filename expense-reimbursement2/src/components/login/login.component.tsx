@@ -64,13 +64,17 @@ export class LoginComponent extends React.Component<any,any>{
           })
           .then(resp => {
             localStorage.setItem('user', JSON.stringify(resp));
-            this.props.history.push('/home');
+            if (resp.role==="MANAGER"){
+                this.props.history.push('/manager');
+            }
+            else {
+                this.props.history.push('/user')
+            }
           })
           .catch(err => {
             this.setState({...this.state,
             errorMessage: 'Failed to login at this time'
             })
-              
             console.log(err);
           });
       }
