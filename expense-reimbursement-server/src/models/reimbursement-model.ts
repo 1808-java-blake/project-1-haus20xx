@@ -19,6 +19,6 @@ export class Reimbursement {
       author && (this.author = author);
       resolver && (this.resolver = resolver);
       status && (this.status = status);
-      type && (this.type = status);
+      type && (this.type = type);
     }
   }

@@ -14,7 +14,7 @@ reimbursementRouter.get('', [authMiddleware("MANAGER"), async (req, resp) => {
     }
 }]);
 
-reimbursementRouter.post('', async (req, resp) => {
+reimbursementRouter.post('', [authMiddleware("MANAGER","USER"),async (req, resp) => {
     console.log('creating reimbursement')
     try {
         const id = await reimbursementDao.createReimbursement(req.body);
@@ -24,7 +24,7 @@ reimbursementRouter.post('', async (req, resp) => {
         console.log(err);
         resp.sendStatus(500);
     }
-});
+}]);
 
 reimbursementRouter.patch('', [authMiddleware("MANAGER"), async (req, resp) => {
     console.log('updating a reimbursement');
@@ -38,7 +38,7 @@ reimbursementRouter.patch('', [authMiddleware("MANAGER"), async (req, resp) => {
     }
 }]);
 
-reimbursementRouter.get('/:creator', async (req,resp)=>{
+reimbursementRouter.get('/:creator', [authMiddleware("USER","MANAGER"),async (req,resp)=>{
     const creator = +req.params.creator;
     try {
         let reimbursements = await reimbursementDao.findAll();
@@ -61,4 +61,4 @@ reimbursementRouter.get('/:creator', async (req,resp)=>{
     catch (err) {
         resp.sendStatus(500);
     }
-})
+}]);
