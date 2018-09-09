@@ -17,8 +17,6 @@ export class UserMainComponent extends React.Component<any, any> {
         };
     }
     public componentDidMount() {
-        console.log('the state is ' + this.state.user);
-        console.log('the state has value ' + this.state.user.id);
         fetch('http://localhost:3000/reimbursements/' + this.state.user.id, {
             body: JSON.stringify(this.state.credentials),
             credentials: 'include',
@@ -40,6 +38,11 @@ export class UserMainComponent extends React.Component<any, any> {
                 console.log('err');
             })
     }
+
+    public submitReimbursement = ()=>{
+        console.log('helloworld');
+    }
+
     public render() {
         return (
             <div>
@@ -78,6 +81,9 @@ export class UserMainComponent extends React.Component<any, any> {
                 <button type="button" className="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
                     Submit a Request
                 </button>
+                <br/>
+                <button type="button" className="btn btn-primary btn-sm btn-red">Logout</button>
+
 
                 <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
@@ -90,10 +96,15 @@ export class UserMainComponent extends React.Component<any, any> {
                             </div>
                             <div className="modal-body">
                                 ...
+
+
+
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                <button type="button" className="btn btn-primary">Submit Reimbursement</button>
+                                <button type="button" className="btn btn-secondary btn-red" data-dismiss="modal">Cancel</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>{
+                                    this.submitReimbursement();
+                                }}>Submit Reimbursement</button>
                             </div>
                         </div>
                     </div>

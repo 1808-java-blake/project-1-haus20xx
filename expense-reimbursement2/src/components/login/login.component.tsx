@@ -86,7 +86,8 @@ export class LoginComponent extends React.Component<any,any>{
         return(    
             <div className="col-4">
             <form className="form-signin" onSubmit={this.submit}>
-              <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+              <h1 className="h3 mb-3 font-weight-normal readable">Please sign into the 
+              Payed-to-Play Financial Reimbursement Center</h1>
               <label htmlFor="username" className="sr-only">Username</label>
               <input
               onChange={this.usernameChange}
@@ -107,11 +108,11 @@ export class LoginComponent extends React.Component<any,any>{
               <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
               {errorMessage && <p id="error-message">{errorMessage}</p>}
             </form>
-            <p className="mt-5 mb-3">Are you a developer doing a presentation who needs a user?</p>
+            <p className="mt-5 mb-3 readable">Are you a developer doing a presentation who needs a user?</p>
                 <Link to="/register">
                 <button className="btn btn-lg btn-primary btn-reg">Register</button>
                 </Link>
-            <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+            <p className="mt-5 mb-3 text-muted readable">&copy; 2017-2018</p>
           </div>
         )}
 }

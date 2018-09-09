@@ -16,8 +16,8 @@ class App extends React.Component<any,any> {
 
   public render() {
     return (
-      <BrowserRouter>
-      <div className="App row justify-content-center">
+      <BrowserRouter >
+      <div className="App row justify-content-center coin-bg">
         <Switch>
           <Route path='/login' component={LoginComponent}/>
           <Route path='/register' component={RegisterComponent}/>

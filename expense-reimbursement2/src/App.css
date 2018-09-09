@@ -65,3 +65,25 @@ nav {
 #examples-dropdown {
   cursor: pointer;
 }
+
+ body {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ), url('background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: auto;
+}
+h1.readable{
+  color: white;
+}
+p.readable{
+  color:lightgrey;
+}
+button.btn-red, button.btn-red:hover, button.btn-red:active, button.btn-red:focus, button.btn-red:active:focus{
+  border-color: lightcoral;
+  background-color: lightcoral;
+  
+}
