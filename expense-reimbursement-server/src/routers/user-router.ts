@@ -67,3 +67,8 @@ userRouter.post('', async (req, resp) => {
 
   }
 })
+
+userRouter.post('/logout', (req,resp)=>{
+  req.session.user = null;
+  resp.sendStatus(200);
+})

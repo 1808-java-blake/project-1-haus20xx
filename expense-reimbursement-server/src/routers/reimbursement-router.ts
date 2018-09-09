@@ -38,6 +38,27 @@ reimbursementRouter.patch('', [authMiddleware("MANAGER"), async (req, resp) => {
     }
 }]);
 
-reimbursementRouter.get('/:creator', (req,resp)=>{
+reimbursementRouter.get('/:creator', async (req,resp)=>{
     const creator = +req.params.creator;
+    try {
+        let reimbursements = await reimbursementDao.findAll();
+        let filteredReimbursements = reimbursements.filter((reimbursement)=>{
+            if (reimbursement.author === creator){
+                return true;
+            }
+            else{
+                return false;
+            }
+        })
+        if (filteredReimbursements.length != 0){
+            resp.json(filteredReimbursements);
+        }
+        else {
+            resp.sendStatus(404);
+        }
+        
+    }
+    catch (err) {
+        resp.sendStatus(500);
+    }
 })
