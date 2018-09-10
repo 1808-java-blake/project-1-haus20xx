@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ManagerKeyComponent } from '../user-keys/manager.key.component';
 
 export class UserMainComponent extends React.Component<any, any> {
     constructor(props: any) {
@@ -24,7 +25,6 @@ export class UserMainComponent extends React.Component<any, any> {
     }
     public componentDidMount() {
         fetch('http://localhost:3000/reimbursements/' + this.state.user.id, {
-            body: JSON.stringify(this.state.credentials),
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
@@ -92,8 +92,6 @@ export class UserMainComponent extends React.Component<any, any> {
             console.log(err);
         })
     }
-
-
     public logout = () => {
         fetch('http://localhost:3000/users/logout', {
             credentials: 'include',
@@ -115,6 +113,7 @@ export class UserMainComponent extends React.Component<any, any> {
     public render() {
         return (
             <div>
+                <br/>
                 <table className="table table-hover table-dark">
                     <thead>
                         <tr>
@@ -150,7 +149,9 @@ export class UserMainComponent extends React.Component<any, any> {
                     && (<button type="button" className="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
                         Submit a Request
                  </button>)}
-                <br />
+                <br/>
+                <ManagerKeyComponent/>
+                <br/>
                 <button type="button" className="btn btn-primary btn-sm btn-red" onClick={this.logout}>Logout</button>
 
 

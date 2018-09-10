@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { UserKeyComponent } from '../user-keys/user.key.component';
 
 export class ManagerMainComponent extends React.Component<any, any> {
     constructor(props: any) {
@@ -197,7 +198,9 @@ export class ManagerMainComponent extends React.Component<any, any> {
 
                     </tbody>
                 </table>
-                <br />
+                <br/>
+                <UserKeyComponent/>
+                <br/>
                 <button type="button" className="btn btn-primary btn-sm btn-red" onClick={this.logout}>Logout</button>
 
             </div>
