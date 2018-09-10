@@ -14,7 +14,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
         }
 
         this.state = {
-            allReimbursements:[{}],
+            allReimbursements: [{}],
             reimbursements: [{}],
             user: userObject,
         }
@@ -31,10 +31,15 @@ export class ManagerMainComponent extends React.Component<any, any> {
                 return resp.json();
             })
             .then(resp => {
+                let sortedResp;
+                sortedResp = resp.sort( (a:any,b:any)=>{
+                    return (a.id - b.id)
+
+                });
                 this.setState({
                     ...this.state,
-                    allReimbursements: resp,
-                    reimbursements: resp,
+                    allReimbursements: sortedResp,
+                    reimbursements: sortedResp,
 
                 });
             })
@@ -42,7 +47,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
                 console.log(err);
             })
     }
-    public  updateTableSort(selection: string) {
+    public updateTableSort(selection: string) {
         let newTable;
         switch (selection) {
             case "all":
@@ -50,31 +55,30 @@ export class ManagerMainComponent extends React.Component<any, any> {
                 break;
             case "pending":
                 newTable = this.state.allReimbursements.filter((re: any) => {
-                    if (re.status === "PENDING"){
+                    if (re.status === "PENDING") {
                         return true;
                     }
-                    else{
+                    else {
                         return false;
                     }
                 })
                 break;
             case "approved":
                 newTable = this.state.allReimbursements.filter((re: any) => {
-                    if (re.status === "APPROVED"){
+                    if (re.status === "APPROVED") {
                         return true;
                     }
-                    else{
+                    else {
                         return false;
                     }
                 })
                 break;
             case "denied":
                 newTable = this.state.allReimbursements.filter((re: any) => {
-                    if (re.status === "DENIED"){
+                    if (re.status === "DENIED") {
                         return true;
                     }
-                    else
-                    {
+                    else {
                         return false;
                     }
                 })
@@ -86,6 +90,43 @@ export class ManagerMainComponent extends React.Component<any, any> {
             ...this.state,
             reimbursements: newTable
         });
+    }
+    public updateRequest = (e: any, type: number) => {
+        fetch('http://localhost:3000/reimbursements/', {
+            body: JSON.stringify({
+                newStatus: type,
+                reimbId: e.target.value,
+                resolver: this.state.user.id,
+            }),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PATCH',
+        })
+            .then(() => {
+                this.componentDidMount();
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    public logout = () => {
+        fetch('http://localhost:3000/users/logout', {
+            credentials: 'include',
+            method: 'POST'
+        })
+            .then(() => {
+                localStorage.setItem('user', "");
+                this.setState({
+                    ...this.state,
+                    user: ""
+                });
+                this.props.history.push('/login');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     public render() {
@@ -111,7 +152,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
                     <thead>
                         <tr>
                             <th scope="col">Ticket #</th>
-                            <th scope="col">Creator</th>
+                            <th scope="col" >Creator</th>
                             <th scope="col">Reimbursement Amount</th>
                             <th scope="col">Submitted</th>
                             <th scope="col">Resolved</th>
@@ -123,23 +164,42 @@ export class ManagerMainComponent extends React.Component<any, any> {
                     </thead>
                     <tbody>
                         {
-                            this.state.reimbursements.map((reimb: any) => (
-                                <tr key={reimb.id}>
-                                    <td>{reimb.id}</td>
-                                    <td>{reimb.author}</td>
-                                    <td>{reimb.amount}</td>
-                                    <td>{reimb.submittedTS}</td>
-                                    <td>{reimb.resolvedTS}</td>
-                                    <td>{reimb.resolver}</td>
-                                    <td>{reimb.description}</td>
-                                    <td>{reimb.type}</td>
-                                    <td>{reimb.status}</td>
-                                </tr>
-                            ))
+                            this.state.reimbursements.map((reimb: any) => {
+                                return (
+                                    <tr key={reimb.id}>
+                                        <td>{reimb.id}</td>
+                                        <td>{reimb.author}</td>
+                                        <td>{reimb.amount}</td>
+                                        <td>{reimb.submittedTS}</td>
+                                        <td>{reimb.resolvedTS}</td>
+                                        <td>{reimb.resolver}</td>
+                                        <td>{reimb.description}</td>
+                                        <td>{reimb.type}</td>
+                                        {(reimb.status !== "PENDING") ? (
+                                            <td>{reimb.status}</td>) : (
+                                                <td>
+                                                    <button type="button" value={reimb.id}
+                                                        className="btn btn-small btn-outline-success"
+                                                        onClick={(e: any) => {
+                                                            this.updateRequest(e, 2);
+                                                        }} >Approve</button>
+                                                    <button type="button" value={reimb.id}
+                                                        className="btn btn-small btn-outline-danger"
+                                                        onClick={(e: any) => {
+                                                            this.updateRequest(e, 3);
+                                                        }} >Deny</button>
+                                                </td>)
+                                        }
+                                    </tr>
+                                )
+                            })
                         }
 
                     </tbody>
                 </table>
+                <br />
+                <button type="button" className="btn btn-primary btn-sm btn-red" onClick={this.logout}>Logout</button>
+
             </div>
         );
     }
