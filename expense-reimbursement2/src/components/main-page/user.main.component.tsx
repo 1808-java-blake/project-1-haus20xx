@@ -12,7 +12,11 @@ export class UserMainComponent extends React.Component<any, any> {
             userObject = {};
         }
         this.state = {
+            amount: 0,
+            currentError: "",
+            description: "",
             reimbursements: [{}],
+            type: "OTHER",
             user: userObject
         };
     }
@@ -35,12 +39,74 @@ export class UserMainComponent extends React.Component<any, any> {
                 });
             })
             .catch(err => {
-                console.log('err');
+                console.log(err);
             })
     }
-
-    public submitReimbursement = ()=>{
-        console.log('helloworld');
+    public amountChange = (e:any) =>{
+        this.setState({
+            ...this.state,
+            amount:e.target.value
+        })
+    }
+    public descriptionChange = (e:any)=>{
+        this.setState({
+            ...this.state,
+            description: e.target.value
+        })
+    }
+    public typeChange = (e:any)=>{
+        this.setState({
+            ...this.state,
+            type:e.target.value
+        })
+    }
+    public submitReimbursement = () => {
+        fetch('http://localhost:3000/reimbursements/',{
+            body: JSON.stringify({
+            amount:this.state.amount,
+            author: this.state.user.id,
+            description:this.state.description,
+            type: this.state.type
+        }),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+        })
+        .then(()=>{
+        this.componentDidMount();
+        }
+        )
+        .then(()=>{
+        this.setState({
+            ...this.state,
+            amount:0,
+            description:"",
+            type:"OTHER"
+        })
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+    
+    public logout = () => {
+        fetch('http://localhost:3000/users/logout', {
+            credentials: 'include',
+            method: 'POST'
+        })
+            .then(() => {
+                localStorage.setItem('user', "");
+                this.setState({
+                    ...this.state,
+                    user: ""
+                });
+                this.props.history.push('/login');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     public render() {
@@ -77,12 +143,12 @@ export class UserMainComponent extends React.Component<any, any> {
 
                     </tbody>
                 </table>
-
-                <button type="button" className="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-                    Submit a Request
-                </button>
-                <br/>
-                <button type="button" className="btn btn-primary btn-sm btn-red">Logout</button>
+                {(Object.keys(this.state.user).length !== 0)
+                    && (<button type="button" className="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                        Submit a Request
+                 </button>)}
+                <br />
+                <button type="button" className="btn btn-primary btn-sm btn-red" onClick={this.logout}>Logout</button>
 
 
                 <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -95,16 +161,30 @@ export class UserMainComponent extends React.Component<any, any> {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                ...
-
-
-
+                                Amount
+                                <div className="form-group row">
+                                    <label htmlFor="example-number-input" className="col-2 col-form-label">$</label>
+                                    <div className="col-10">
+                                        <input className="form-control" type="number" value={this.state.amount} id="example-number-input"
+                                        onChange={this.amountChange} />
+                                    </div>
+                                </div>
+                                Type
+                                <select className="form-control" onChange={this.typeChange} value={this.state.type}>
+                                    <option value="OTHER">Other</option>
+                                    <option value="LODGING">Lodging</option>
+                                    <option value="TRAVEL">Travel</option>
+                                    <option value="FOOD">Food</option>
+                                </select>
+                                <div className="form-group">
+                                    <label htmlFor="exampleFormControlTextarea1">Description</label>
+                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows={3} onChange={this.descriptionChange} value={this.state.description} required></textarea>
+                                </div>
+                                <button type="button" className="btn btn-secondary btn-red" data-dismiss="modal">Cancel</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.submitReimbursement} >Submit Reimbursement</button>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary btn-red" data-dismiss="modal">Cancel</button>
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>{
-                                    this.submitReimbursement();
-                                }}>Submit Reimbursement</button>
+
                             </div>
                         </div>
                     </div>
