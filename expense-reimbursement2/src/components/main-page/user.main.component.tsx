@@ -5,12 +5,14 @@ export class UserMainComponent extends React.Component<any, any> {
         super(props);
         const userHolder = localStorage.getItem('user');
         let userObject;
+
         if (userHolder) {
             userObject = JSON.parse(userHolder);
         }
         else {
             userObject = {};
         }
+
         this.state = {
             amount: 0,
             currentError: "",
@@ -90,7 +92,8 @@ export class UserMainComponent extends React.Component<any, any> {
             console.log(err);
         })
     }
-    
+
+
     public logout = () => {
         fetch('http://localhost:3000/users/logout', {
             credentials: 'include',
