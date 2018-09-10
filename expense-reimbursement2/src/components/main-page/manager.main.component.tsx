@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { UserKeyComponent } from '../user-keys/user.key.component';
+import { environment } from '../../environment';
 
 export class ManagerMainComponent extends React.Component<any, any> {
     constructor(props: any) {
@@ -21,7 +22,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
         }
     }
     public componentDidMount() {
-        fetch('http://localhost:3000/reimbursements/', {
+        fetch(environment+'reimbursements/', {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
@@ -93,7 +94,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
         });
     }
     public updateRequest = (e: any, type: number) => {
-        fetch('http://localhost:3000/reimbursements/', {
+        fetch(environment+'reimbursements/', {
             body: JSON.stringify({
                 newStatus: type,
                 reimbId: e.target.value,
@@ -113,7 +114,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
             })
     }
     public logout = () => {
-        fetch('http://localhost:3000/users/logout', {
+        fetch(environment+'users/logout', {
             credentials: 'include',
             method: 'POST'
         })

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from 'react-router-dom';
+import { environment } from "../../environment";
 
 
 export class LoginComponent extends React.Component<any,any>{
@@ -37,7 +38,7 @@ export class LoginComponent extends React.Component<any,any>{
     
       public submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetch('http://localhost:3000/users/login', {
+        fetch(environment+'users/login', {
           body: JSON.stringify(this.state.credentials),
           credentials: 'include',
           headers: {

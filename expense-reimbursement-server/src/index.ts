@@ -7,8 +7,10 @@ import { userRouter } from './routers/user-router';
 import { reimbursementRouter } from './routers/reimbursement-router';
 
 
+
 // create the app object from express
 const app = express();
+
 
 // set the port
 const port = 3000 || process.env.PORT; // will use port from computers environment variables or 3000 if there is none
@@ -35,6 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // allow static content to be served, navigating to url with nothing after / will serve index.html from public
 app.use(
   express.static(path.join(__dirname, 'public'))
@@ -49,6 +52,7 @@ app.use((req, resp, next) => {
     ? resp.header('Access-Control-Allow-Origin', process.env.DEMO_APP_URL)
     : resp.header('Access-Control-Allow-Origin', `http://localhost:3001`);
   resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  resp.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, PUT, DELETE, OPTIONS');
   resp.header('Access-Control-Allow-Credentials', 'true');
   next();
 });

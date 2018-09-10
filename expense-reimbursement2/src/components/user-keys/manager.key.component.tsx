@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { environment } from '../../environment';
 
 
 export class ManagerKeyComponent extends React.Component<any,any> {
@@ -9,7 +10,7 @@ export class ManagerKeyComponent extends React.Component<any,any> {
         }
     }
     public componentDidMount(){
-        fetch('http://localhost:3000/users/', {
+        fetch(environment+'users/', {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
