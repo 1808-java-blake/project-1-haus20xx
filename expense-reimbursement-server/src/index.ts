@@ -52,7 +52,7 @@ app.use((req, resp, next) => {
     ? resp.header('Access-Control-Allow-Origin', process.env.DEMO_APP_URL)
     : resp.header('Access-Control-Allow-Origin', `http://localhost:3001`);
   resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  resp.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, PUT, DELETE, OPTIONS');
+  // resp.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, PUT, DELETE, OPTIONS');
   resp.header('Access-Control-Allow-Credentials', 'true');
   next();
 });

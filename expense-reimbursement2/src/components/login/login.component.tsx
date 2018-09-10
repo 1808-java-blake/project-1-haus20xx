@@ -38,7 +38,7 @@ export class LoginComponent extends React.Component<any,any>{
     
       public submit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetch(environment+'users/login', {
+        fetch(environment+'/users/login', {
           body: JSON.stringify(this.state.credentials),
           credentials: 'include',
           headers: {

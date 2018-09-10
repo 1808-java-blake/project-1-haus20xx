@@ -64,7 +64,7 @@ export class UserMainComponent extends React.Component<any, any> {
         })
     }
     public submitReimbursement = () => {
-        fetch(environment+'reimbursements/',{
+        fetch(environment+'/reimbursements/',{
             body: JSON.stringify({
             amount:this.state.amount,
             author: this.state.user.id,
@@ -94,7 +94,7 @@ export class UserMainComponent extends React.Component<any, any> {
         })
     }
     public logout = () => {
-        fetch(environment+'users/logout', {
+        fetch(environment+'/users/logout', {
             credentials: 'include',
             method: 'POST'
         })

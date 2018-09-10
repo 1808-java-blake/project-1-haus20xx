@@ -10,7 +10,7 @@ export class UserKeyComponent extends React.Component<any,any> {
         }
     }
     public componentDidMount(){
-        fetch(environment+'users/', {
+        fetch(environment+'/users/', {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'

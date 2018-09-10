@@ -22,7 +22,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
         }
     }
     public componentDidMount() {
-        fetch(environment+'reimbursements/', {
+        fetch(environment+'/reimbursements/', {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
         });
     }
     public updateRequest = (e: any, type: number) => {
-        fetch(environment+'reimbursements/', {
+        fetch(environment+'/reimbursements/', {
             body: JSON.stringify({
                 newStatus: type,
                 reimbId: e.target.value,
@@ -114,7 +114,7 @@ export class ManagerMainComponent extends React.Component<any, any> {
             })
     }
     public logout = () => {
-        fetch(environment+'users/logout', {
+        fetch(environment+'/users/logout', {
             credentials: 'include',
             method: 'POST'
         })
